@@ -1,0 +1,29 @@
+{
+  "name": "fas-google-play-scraper",
+  "version": "1.0.0",
+  "description": "Module created to consume methods from google-play-scraper module.",
+  "main": "app.js",
+  "dependencies": {
+    "google-play-scraper": "^8.0.2",
+    "node-persist": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samas-it-services/fas-backend.git"
+  },
+  "keywords": [
+    "freeappshowroom",
+    "samas-it-services",
+    "google-play-store"
+  ],
+  "author": "Syed Bilgrami",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samas-it-services/fas-backend/issues"
+  },
+  "homepage": "https://github.com/samas-it-services/fas-backend#readme"
+}
