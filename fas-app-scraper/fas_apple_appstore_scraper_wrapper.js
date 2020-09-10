@@ -1,4 +1,5 @@
 const store = require('app-store-scraper');
+const invariant = require('invariant');
 
 class FAS_Apple_Appstore_Scraper_Wrapper {
 
@@ -18,7 +19,9 @@ class FAS_Apple_Appstore_Scraper_Wrapper {
     ratings: load additional ratings information like ratings number and histogram
     */
 
-    async get_app_details(id = '553834731 ', appId = 'com.midasplayer.apps.candycrushsaga', lang = 'en', country = 'us', ratings = false) {
+    async get_app_details(id, appId, lang = 'en', country = 'us', ratings = false) {
+        invariant(id || appId, 'Either id or appId is required');
+
         const global_params = this.global_params
         const params = {
             'id': id,
@@ -65,7 +68,9 @@ class FAS_Apple_Appstore_Scraper_Wrapper {
   
     */
 
-    async get_list(num = 1, collection = store.collection.TOP_FREE_IPAD, catagory = store.category.GAMES_ACTION, country = 'us', fullDetail = false) {
+    async get_list(num = 1, collection, catagory, country = 'us', fullDetail = false) {
+        invariant(collection || catagory, 'Either collection or catagory is required');
+
         const global_params = this.global_params
         const params = {
             'num': num,
@@ -115,6 +120,8 @@ class FAS_Apple_Appstore_Scraper_Wrapper {
     */
 
     async get_search(term, num = 1, page = 1, lang = 'en', country = 'us', idsOnly = true) {
+        invariant(term, 'search term is required');
+
         const global_params = this.global_params
         const params = {
             'term': term,

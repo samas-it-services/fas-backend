@@ -39,12 +39,12 @@ create_data_files_from_apple_app_store = (config, file_helper) => {
 
   // // Get all apps with Ids only matching the search term 'covid19'
   // get_search(term = 'covid19', num = 250, page = 1, idsOnly = true)
-  var result = apple_store.get_search('covid19', num, 1, true)
+  var result = apple_store.get_search(search_term, num, 1, true)
   fh.save_to_file_async(result, `${file_prefix}_${search_term}_search_ids-only-page-1.json`)
 
   // // Get all apps with Ids only matching the search term 'covid19'
   // get_search(term = 'covid19', num = 250, page = 2, idsOnly = true)
-  var result = apple_store.get_search('covid19', num, 2, true)
+  var result = apple_store.get_search(search_term, num, 2, true)
   fh.save_to_file_async(result, `${file_prefix}_${search_term}_search_ids-only-page-2.json`)
 }
 
@@ -58,7 +58,7 @@ create_data_files_from_google_store = (config, file_helper) => {
   const page_count = 10
 
   // Get App Details
-  const app_name = 'com.oasissolutions.bahlool.dana.free'
+  const app_name = 'com.google.android.apps.translate'
   // var result = this.get_app_details('com.google.android.apps.translate', lang = 'en', country = 'us');
   var result = google_store.get_app_details(app_name, 'en', 'us');
   fh.save_to_file_async(result, `${file_prefix}_app_detail_${app_name}.json`)

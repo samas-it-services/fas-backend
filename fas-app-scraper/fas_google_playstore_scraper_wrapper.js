@@ -1,4 +1,5 @@
 const gplay = require('google-play-scraper');
+const invariant = require('invariant');
 
 class FAS_Google_PlayStore_Scraper_Wrapper {
 
@@ -7,7 +8,6 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
         this.DEBUG = config.DEBUG || 0; // if 1, first 100 results are printed on console
         this.global_params = {}
     }
-
 
     /*
     Method: get_app_details
@@ -19,7 +19,9 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
     country (optional, defaults to 'us'): the two letter country code used to retrieve the applications. Needed when the app is available only in some countries.
     */
 
-    async get_app_details(appId = 'com.google.android.apps.translate', lang = 'en', country = 'us') {
+    async get_app_details(appId, lang = 'en', country = 'us') {
+        invariant(appId, 'appId is required');
+
         const global_params = this.global_params
         const params = {
             'appId': appId,
@@ -63,7 +65,9 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
     fullDetail (optional, defaults to false): if true, an extra request will be made for every resulting app to fetch its full detail.
     */
 
-    async get_list(num = 1, collection = gplay.collection.TOP_FREE, catagory = gplay.category.GAME, age = null, fullDetail = false) {
+    async get_list(num = 1, collection, catagory, age = null, fullDetail = false) {
+        invariant(collection || catagory, 'Either collection or catagory is required');
+
         const global_params = this.global_params
         const params = {
             'num': num,
@@ -112,6 +116,8 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
     */
 
     async get_search(term, num = 1, lang = 'en', country = 'us', fullDetail = false, price = 'all') {
+        invariant(term, 'Search term is required');
+
         const global_params = this.global_params
         const params = {
             'term': term,
