@@ -14,17 +14,17 @@
     "summary": "The world is closer than ever with over 100 languages",
     "installs": "500,000,000+",
     "minInstalls": 500000000,
-    "maxInstalls": 927730412,
+    "maxInstalls": 927811803,
     "score": 4.4797835,
     "scoreText": "4.5",
-    "ratings": 7334655,
-    "reviews": 1770608,
+    "ratings": 7335114,
+    "reviews": 1770739,
     "histogram": {
-      "1": 397941,
-      "2": 151325,
-      "3": 416509,
-      "4": 936847,
-      "5": 5432030
+      "1": 397966,
+      "2": 151334,
+      "3": 416535,
+      "4": 936906,
+      "5": 5432370
     },
     "price": 0,
     "free": true,
@@ -70,9 +70,9 @@
     "comments": [
       "When using my voice it only gets the middle of my sentence. The first part is cut off and sometime the last part too. I say \"Hello, how are you?\" And it hears \"Oh, how are you?\". If I just say \"Hello\" it hears nothing... It beeps like it's listening then I talk. Perhaps it's not listening for the first few seconds. I have to wait a few beats after the beep, then start talking. It's annoying trying to time it and sometimes it stops listening in the middle of me speaking. Please fix this!",
       "The app is good. Especially, while reading, it is easy to translate the words just by selecting them. but the problem is the words didn't appear in the history list. if I select the word on some app, click the translate option and see the translation. That word would not appear in the history of translations. It would be great if this feature is implemented/fixed.",
+      "The best! I've been watching Spanish (fast language to speak as we knew) clips on youtube and with transcribe, I can definitely understand almost all of the things that the story tells, I just hoped that there's transcribe on iOS too, lucky to have an android tho. The best translator even with the camera but if you want no interruption while watching, just use transcribe and just read it later, this helped me alot.",
       "The 'Tap to translate' feature is very useful. The only drawback is that the icon and its touch catchment area are unnecessarily large. As a result, the icon often gets in the way when I try to use the screen and it's rather annoying. Can you please reduce the icon size and the tap catchment area, and make it possible to minimise the icon to one side (like turning it into a thin line)? Thanks",
-      "The app is great, it works very well and I love to translate and learn new languages in it, but there is one thing that bothers me a lot: I write the sentences and every time I put an end to continue writing it, the sentence translates with several spaces and separations that bother me a lot, instead of the phrase being written together. For example: “I like ice cream. Do you like it too? It's so good.” Can you fix this, please? Thank you very much.",
-      "This used to be my go to translator. But this new dangling icon is for the birds. It is always in the way. It doesn't matter how small it will become. I really loved the copying something and immediately the translator would pop up. I find this new system of the floating icon unusable. I will be moving on to another translator. Because you have seriously lost me on this last upgrade. I hate it."
+      "The app is great, it works very well and I love to translate and learn new languages in it, but there is one thing that bothers me a lot: I write the sentences and every time I put an end to continue writing it, the sentence translates with several spaces and separations that bother me a lot, instead of the phrase being written together. For example: “I like ice cream. Do you like it too? It's so good.” Can you fix this, please? Thank you very much."
     ],
     "editorsChoice": false,
     "appId": "com.google.android.apps.translate",
