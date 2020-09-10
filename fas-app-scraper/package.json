@@ -1,11 +1,11 @@
 {
-  "name": "fas-google-play-scraper",
+  "name": "fas-app-scraper",
   "version": "1.0.0",
-  "description": "Module created to consume methods from google-play-scraper module.",
-  "main": "app.js",
+  "description": "Module created to consume data from Apple and Google Play stores. Saves results to a file inside data folder. ",
+  "main": "index.js",
   "dependencies": {
-    "google-play-scraper": "^8.0.2",
-    "node-persist": "^3.1.0"
+    "app-store-scraper": "^0.16.3",
+    "google-play-scraper": "^8.0.2"
   },
   "devDependencies": {},
   "scripts": {
@@ -18,7 +18,9 @@
   "keywords": [
     "freeappshowroom",
     "samas-it-services",
-    "google-play-store"
+    "fas-app-scraper",
+    "google-play-scraper",
+    "apple-appstore-scraper"
   ],
   "author": "Syed Bilgrami",
   "license": "ISC",

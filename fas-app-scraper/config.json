@@ -1,0 +1,7 @@
+{
+    "DEBUG": 0,
+    "PRETIFY_JSON": true,
+    "OUTPUT_FOLDER_PATH": "data/",
+    "DEFAULT_OUTPUT_FILE": "result.json",
+    "THROTTLE": 8
+}
