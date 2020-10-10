@@ -1,5 +1,7 @@
 # fas-app-scraper
-Module pulls data from Apple and Google Play stores, and save results to file.
+Module pulls data from Apple and Google Play stores, and save results to file. 
+
+Sample data is store [here](https://github.com/samas-it-services/fas-backend/tree/master/fas-app-scraper/data).
 
 # Install dependencies
 ```
