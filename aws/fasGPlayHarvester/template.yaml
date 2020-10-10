@@ -127,6 +127,42 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
+
+      GlobalSecondaryIndexes: 
+        - 
+          IndexName: "titleGSI"
+          KeySchema: 
+            - 
+              AttributeName: "title"
+              KeyType: "HASH"
+            - 
+              AttributeName: "price"
+              KeyType: "RANGE"
+          Projection: 
+            NonKeyAttributes: 
+              - "developer"
+              - "score"
+            ProjectionType: "INCLUDE"
+          ProvisionedThroughput: 
+            ReadCapacityUnits: "5"
+            WriteCapacityUnits: "5"
+        - 
+          IndexName: "priceGSI2"
+          KeySchema: 
+            - 
+              AttributeName: "price"
+              KeyType: "HASH"
+            - 
+              AttributeName: "score"
+              KeyType: "RANGE"
+          Projection: 
+            NonKeyAttributes: 
+              - "title"
+            ProjectionType: "INCLUDE"
+          ProvisionedThroughput: 
+            ReadCapacityUnits: "5"
+            WriteCapacityUnits: "5"
+
         
   ExitFunction:
     Type: AWS::Serverless::Function
