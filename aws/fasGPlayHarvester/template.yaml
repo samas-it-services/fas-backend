@@ -140,6 +140,7 @@ Resources:
               KeyType: "RANGE"
           Projection: 
             NonKeyAttributes: 
+              - "Id"
               - "developer"
               - "score"
             ProjectionType: "INCLUDE"
@@ -157,7 +158,9 @@ Resources:
               KeyType: "RANGE"
           Projection: 
             NonKeyAttributes: 
+              - "developer"
               - "title"
+              - "summary"
             ProjectionType: "INCLUDE"
           ProvisionedThroughput: 
             ReadCapacityUnits: "5"
