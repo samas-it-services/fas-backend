@@ -24,8 +24,6 @@ sam build GPlayAppSearcherFunction
 echo Executing GPlayAppSearcherFunction
 sam local invoke GPlayAppSearcherFunction --parameter-overrides \
 ParameterKey=Environment,ParameterValue=$Environment \
-ParameterKey=TwitterKey,ParameterValue=$TwitterKey \
-ParameterKey=TwitterSecretKey,ParameterValue=$TwitterSecretKey \
 ParameterKey=InputBucketName,ParameterValue=$InputBucketName \
 ParameterKey=S3RootFolder,ParameterValue=$S3RootFolder \
 ParameterKey=Debug,ParameterValue=$Debug \
