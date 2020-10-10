@@ -1,0 +1,10 @@
+{
+    "statusCode": 200,
+    "body": {
+        "file_path": "k24dataharvester/gplay_apps/2020/10/videos-2020_10_04-01_30_10_PM-result-55-rows.json",
+        "query": "Karachi OR #Karachi OR karachi OR #karachi min_regplay_apps:10 min_faves:10 -filter:replies filter:videos",
+        "category": "videos",
+        "count": 100,
+        "since_id": "1312862399490220002"
+    }
+}

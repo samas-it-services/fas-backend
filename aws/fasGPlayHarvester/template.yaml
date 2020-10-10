@@ -1,0 +1,148 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  fasGPlayHarvester
+  SAM Template for freeappshowroom Data Harvester For Google Play
+  
+Parameters:
+  Environment:
+    Type: String
+    Description: Choose between local or AWS
+    Default: 'aws'    
+    AllowedValues:
+      - local
+      - aws
+
+  InputBucketName:
+    Type: String
+
+  DBTableName:
+    Type: String
+
+  S3RootFolder:
+    Type: String
+
+  DynamoDbEndPointURL:
+    Type: String    
+    Description: Use it for local development, typically set to http://dynamodb:8000
+
+  Debug:
+    Type: String
+    Description: Print all environment variable (including sensitive keys) if value is not empty
+    Default: '0'
+
+Resources:
+  InputS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref InputBucketName
+  
+  fasGPlayHarvesterStateMachine:
+    Type: AWS::Serverless::StateMachine # More info about State Machine Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-statemachine.html
+    Properties:
+      DefinitionUri: statemachine/gplay_app_importer.asl.json
+      DefinitionSubstitutions:
+        GPlayAppSearcherFunctionArn: !GetAtt GPlayAppSearcherFunction.Arn
+        SaveToDynamoDbFunctionArn: !GetAtt SaveToDynamoDbFunction.Arn
+        ExitFunctionArn: !GetAtt ExitFunction.Arn
+        DDBPutItem: !Sub arn:${AWS::Partition}:states:::dynamodb:putItem
+        DDBTable: !Ref DynamoDbTable
+      Events:
+        DailySchedule:
+          Type: Schedule # More info about Schedule Event Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-statemachine-schedule.html
+          Properties:
+            Description: Schedule to run the state machine
+            Enabled: True
+            Schedule: "rate(1 day)"
+      Policies: # Find out more about SAM policy templates: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - LambdaInvokePolicy:
+            FunctionName: !Ref GPlayAppSearcherFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref SaveToDynamoDbFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ExitFunction
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDbTable
+        - S3CrudPolicy:
+            BucketName: !Ref InputBucketName 
+
+  GPlayAppSearcherFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
+    Properties:
+      CodeUri: functions/GPlayAppSearcher/
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Timeout: 10
+      Environment:
+        Variables:
+          Environment: !Ref Environment
+          InputBucketName: !Ref InputBucketName
+          S3RootFolder: !Ref S3RootFolder
+          Debug: !Ref Debug
+
+      Policies: # Find out more about SAM policy templates: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - S3CrudPolicy:
+            BucketName: !Ref InputBucketName 
+
+  SaveToDynamoDbFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/SaveToDynamoDb/
+      Runtime: python3.8
+      Handler: app.lambda_handler
+      Timeout: 60
+      Environment:
+        Variables:
+          Environment: !Ref Environment
+          InputBucketName: !Ref InputBucketName
+          DDBtable: !Ref DBTableName
+          DynamoDbEndPointURL: !Ref DynamoDbEndPointURL
+          Debug: !Ref Debug
+      Policies: # Find out more about SAM policy templates: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDbTable
+        - S3CrudPolicy:
+            BucketName: !Ref InputBucketName 
+
+  DynamoDbTable:
+    Type: AWS::DynamoDB::Table 
+    Properties:
+      AttributeDefinitions: 
+        - 
+          AttributeName: 'Id'
+          AttributeType: 'S'
+        - 
+          AttributeName: 'row_created_at'
+          AttributeType: 'S'
+      KeySchema: 
+        - 
+          AttributeName: 'Id'
+          KeyType: 'HASH'
+        - 
+          AttributeName: 'row_created_at'
+          KeyType: 'RANGE'
+
+      TableName: !Ref DBTableName
+
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+        
+  ExitFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/Exit/
+      Runtime: python3.8
+      Handler: app.lambda_handler
+      Timeout: 5
+
+Outputs:
+  # fasGPlayHarvesterStateMachineHourlyTradingSchedule is an implicit Schedule event rule created out of Events key under Serverless::StateMachine
+  # Find out more about other implicit resources you can reference within SAM
+  # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-generated-resources.html
+  fasGPlayHarvesterStateMachineArn:
+    Description: "Data Harvester for freeappshowroom.com Data Harvester for GPlay Search State machine ARN"
+    Value: !Ref fasGPlayHarvesterStateMachine
+  fasGPlayHarvesterStateMachineRoleArn:
+    Description: "IAM Role created for freeappshowroom.com Data Harvester for GPlay Search"
+    Value: !GetAtt fasGPlayHarvesterStateMachineRole.Arn

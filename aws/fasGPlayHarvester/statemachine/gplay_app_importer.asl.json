@@ -1,0 +1,63 @@
+{
+    "Comment": "A state machine to import search data for Google Play store apps.",
+    "StartAt": "Get Data",
+    "States": {
+        "Get Data": {
+            "Type": "Task",
+            "Resource": "${GPlayAppSearcherFunctionArn}",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.TaskFailed"
+                    ],
+                    "IntervalSeconds": 60,
+                    "MaxAttempts": 2,
+                    "BackoffRate": 1.5
+                }
+            ],
+            "Next": "Save if Result Found?"
+        },
+        "Save if Result Found?": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.body.count",
+                    "NumericGreaterThan": 0,
+                    "Next": "Save To Dynamo Db"
+                }
+            ],
+            "Default": "Exit"
+        },
+        "Save To Dynamo Db": {
+            "Type": "Task",
+            "Resource": "${SaveToDynamoDbFunctionArn}",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.TaskFailed"
+                    ],
+                    "IntervalSeconds": 5,
+                    "MaxAttempts": 3,
+                    "BackoffRate": 1
+                }
+            ],
+            "Next": "Exit"
+        },
+        "Exit": {
+            "Type": "Task",
+            "Resource": "${ExitFunctionArn}",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.TaskFailed"
+                    ],
+                    "IntervalSeconds": 5,
+                    "MaxAttempts": 1,
+                    "BackoffRate": 1
+                }
+            ],
+            "End": true
+            
+        }
+    }
+}
