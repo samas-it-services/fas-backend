@@ -4,7 +4,12 @@
       "method": "get_app_details",
       "appId": "com.google.android.apps.translate",
       "lang": "en",
-      "country": "us"
+      "country": "us",
+      "DEBUG": 0,
+      "PRETIFY_JSON": true,
+      "OUTPUT_FOLDER_PATH": "data/",
+      "DEFAULT_OUTPUT_FILE": "result.json",
+      "THROTTLE": 8
     }
   },
   {
@@ -14,17 +19,17 @@
     "summary": "The world is closer than ever with over 100 languages",
     "installs": "500,000,000+",
     "minInstalls": 500000000,
-    "maxInstalls": 927811803,
-    "score": 4.4797835,
+    "maxInstalls": 938570536,
+    "score": 4.482215,
     "scoreText": "4.5",
-    "ratings": 7335114,
-    "reviews": 1770739,
+    "ratings": 7396052,
+    "reviews": 1789698,
     "histogram": {
-      "1": 397966,
-      "2": 151334,
-      "3": 416535,
-      "4": 936906,
-      "5": 5432370
+      "1": 398914,
+      "2": 152358,
+      "3": 417995,
+      "4": 940845,
+      "5": 5485938
     },
     "price": 0,
     "free": true,
@@ -64,15 +69,15 @@
     ],
     "contentRating": "Everyone",
     "adSupported": false,
-    "updated": 1597440795000,
+    "updated": 1602216154000,
     "version": "Varies with device",
     "recentChanges": "You can now continuously translate someone speaking a different language in near real-time with the Translate app. For example, translate a classroom lecture or a speech. • The Tap-to-Translate floating icon is now movable and easily dismissable. You can also translate copied text by tapping on the notification itself.",
     "comments": [
-      "When using my voice it only gets the middle of my sentence. The first part is cut off and sometime the last part too. I say \"Hello, how are you?\" And it hears \"Oh, how are you?\". If I just say \"Hello\" it hears nothing... It beeps like it's listening then I talk. Perhaps it's not listening for the first few seconds. I have to wait a few beats after the beep, then start talking. It's annoying trying to time it and sometimes it stops listening in the middle of me speaking. Please fix this!",
-      "The app is good. Especially, while reading, it is easy to translate the words just by selecting them. but the problem is the words didn't appear in the history list. if I select the word on some app, click the translate option and see the translation. That word would not appear in the history of translations. It would be great if this feature is implemented/fixed.",
-      "The best! I've been watching Spanish (fast language to speak as we knew) clips on youtube and with transcribe, I can definitely understand almost all of the things that the story tells, I just hoped that there's transcribe on iOS too, lucky to have an android tho. The best translator even with the camera but if you want no interruption while watching, just use transcribe and just read it later, this helped me alot.",
-      "The 'Tap to translate' feature is very useful. The only drawback is that the icon and its touch catchment area are unnecessarily large. As a result, the icon often gets in the way when I try to use the screen and it's rather annoying. Can you please reduce the icon size and the tap catchment area, and make it possible to minimise the icon to one side (like turning it into a thin line)? Thanks",
-      "The app is great, it works very well and I love to translate and learn new languages in it, but there is one thing that bothers me a lot: I write the sentences and every time I put an end to continue writing it, the sentence translates with several spaces and separations that bother me a lot, instead of the phrase being written together. For example: “I like ice cream. Do you like it too? It's so good.” Can you fix this, please? Thank you very much."
+      "The best non intrusive translation app I've ever used thus far. Translated text, SMS, photos, and the new features as of Sept 11 is translating spoken languages. I'm very happy with the app. You can also click on an application and it will translate the app before you even get started using it. Now you tell me how great that is??? Exactly!!!",
+      "It's an amazing app! I like Japanese things and I'm not fluent in reading Japanese and it's really helped me! But sometimes the translation is off. Soo... ya... It's pretty good. But I think google should fix the bad translates because it's getting kind of annoying. Also it has a hard time translating bubble letters! It also has a hard time translating small letters or kanji. Overall it's a pretty good app.",
+      "As an Australian living in Germany, this app has been an absolute backbone for my studies and when I'm on the move in everyday life. When I want a quick translation for something, whether it be written on a sign or sheet of paper I can translate it. Whether it's said or must be searched for it will show up as requested. Some fine tuning is still needed in relation to the word choice accuracy and sentence structures but other than that Google has created an essential for language translating.",
+      "Works very well, but since I updated my OS and the app itself, the floating icon is always on my screen and I can't dismiss it (yes, holding the button and dragging doesn't do anything). It was much better when the button would just appear after copying text and then disappear on its own. It's a small detail but it's very annoying, unfortunately.",
+      "Tap to translate completely ruined. It was working like a charm in Oreo, with the bubble automatically disappearing once the translation window was closed. Now, on Q you have to jerk it around to hide it, re-enabling it from the notification window if you want to use it again. Don't fix what's not broken."
     ],
     "editorsChoice": false,
     "appId": "com.google.android.apps.translate",

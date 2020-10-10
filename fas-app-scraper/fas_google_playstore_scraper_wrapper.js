@@ -3,10 +3,8 @@ const invariant = require('invariant');
 
 class FAS_Google_PlayStore_Scraper_Wrapper {
 
-    constructor(config) {
-        this.config = config
-        this.DEBUG = config.DEBUG || 0; // if 1, first 100 results are printed on console
-        this.global_params = {}
+    constructor(global_params) {
+        this.global_params = global_params
     }
 
     /*
