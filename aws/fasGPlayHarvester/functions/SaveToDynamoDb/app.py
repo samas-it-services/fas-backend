@@ -29,15 +29,16 @@ def _get_dynamoDb_connection(env, endpoint_url):
 
     return ddbclient
     
-def _parse_gplay_app_from_json(item, extra_data):
+def _parse_gplay_search_result(item, extra_data):
     for elem in item:
         if (type(item[elem]) == float):
             item[elem] = str(item[elem])
 
     result = {
         'Id':                item["appId"],
-        'row_created_at':     str(datetime.now().isoformat()),        
+        'row_created_at':     str(datetime.now().isoformat()),
     }
+    del item['appId'] 
     return {**result, **item, **extra_data}
 
 def _get_s3_file_content_as_json(bucket_name, file_path):
@@ -51,30 +52,21 @@ def lambda_handler(event, context):
     query, category, file_path, result_count = _get_input_params(event)
 
     if debug=="1": 
-        print("Env: env: ", env)
-        print("Env: endpoint_url: ", endpoint_url)
-        print("Env: bucket_name: ", bucket_name)
-        print("Env: table_name: ", table_name)
-        print("Event: query: ", query)
-        print("Event: category: ", category)
-        print("Event: file_path: ", file_path)
-        print("Event: result_count: ", result_count)
+        print("Event: ", event)
 
     try:    
         ddbclient = _get_dynamoDb_connection(env, endpoint_url)
-        result = {}
+        dynamoTable = ddbclient.Table(table_name)
+        print("dynamoTable created on:", dynamoTable.creation_date_time)
+
         if result_count:
             extra_data = {"category": category, "file_path": file_path}
             json_data = _get_s3_file_content_as_json(bucket_name, file_path)
-            dynamoTable = ddbclient.Table(table_name)
-            print("dynamoTable created on:", dynamoTable.creation_date_time)
-
             with dynamoTable.batch_writer() as batch:
-                for item in json_data:
-                    if 'appId' in item:
-                        data = _parse_gplay_app_from_json(item, extra_data)
-                        batch.put_item(data)
-    
+                for item in json_data['data']:
+                    data = _parse_gplay_search_result(item, extra_data)
+                    batch.put_item(data)
+
         return result_count
 
     except botocore.exceptions.ClientError as err:

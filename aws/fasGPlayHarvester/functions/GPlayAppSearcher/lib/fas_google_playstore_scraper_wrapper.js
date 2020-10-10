@@ -118,6 +118,7 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
 
         const global_params = this.global_params
         const params = {
+            'method': 'get_search',
             'term': term,
             'num': num,
             'lang': lang,
@@ -126,12 +127,7 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
             ...global_params
         }
 
-        let data = [{
-            'params': {
-                'method': 'get_search',
-                ...params,
-            },
-        }];
+        let data = [];
 
         await gplay.search(params)
             .then(result => {
@@ -141,9 +137,12 @@ class FAS_Google_PlayStore_Scraper_Wrapper {
                 console.log("error", err)
             });
 
-        return data;
+        const result = {
+            'params': {...params},
+            'data': [...data],
+        }
+        return result;
     }
-
 }
 
 module.exports = {
