@@ -1,14 +1,13 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  fasGPlayHarvester
-  SAM Template for freeappshowroom Data Harvester For Google Play
+  freeappshowroom - Data Harvester to get search results from Google Play store
   
 Parameters:
   Environment:
     Type: String
     Description: Choose between local or AWS
-    Default: 'aws'    
+    Default: "aws"    
     AllowedValues:
       - local
       - aws
@@ -29,14 +28,18 @@ Parameters:
   Debug:
     Type: String
     Description: Print all environment variable (including sensitive keys) if value is not empty
-    Default: '0'
+    Default: "0"
 
 Resources:
   InputS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref InputBucketName
-  
+
+
+  ##########################
+  ##    State Function    ##
+  ##########################
   fasGPlayHarvesterStateMachine:
     Type: AWS::Serverless::StateMachine # More info about State Machine Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-statemachine.html
     Properties:
@@ -66,6 +69,9 @@ Resources:
         - S3CrudPolicy:
             BucketName: !Ref InputBucketName 
 
+  ###################
+  ##    Lambdas    ##
+  ###################
   GPlayAppSearcherFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
     Properties:
@@ -104,25 +110,53 @@ Resources:
         - S3CrudPolicy:
             BucketName: !Ref InputBucketName 
 
+  ExitFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/Exit/
+      Runtime: python3.8
+      Handler: app.lambda_handler
+      Timeout: 5
+          
+
+  ##########################
+  ##    DynamoDB Table    ##
+  ##########################
   DynamoDbTable:
     Type: AWS::DynamoDB::Table 
     Properties:
+      TableName: !Ref DBTableName
+
       AttributeDefinitions: 
         - 
-          AttributeName: 'Id'
-          AttributeType: 'S'
+          AttributeName: "Id"
+          AttributeType: "S"
         - 
-          AttributeName: 'row_created_at'
-          AttributeType: 'S'
+          AttributeName: "row_created_at"
+          AttributeType: "S"
+        - 
+          AttributeName: "title"
+          AttributeType: "S"
+        - 
+          AttributeName: "price"
+          AttributeType: "N"
+        # - 
+        #   AttributeName: "developer"
+        #   AttributeType: "S"
+        - 
+          AttributeName: "score"
+          AttributeType: "S"
+        # - 
+        #   AttributeName: "summary"
+        #   AttributeType: "S"
+        
       KeySchema: 
         - 
-          AttributeName: 'Id'
-          KeyType: 'HASH'
+          AttributeName: "Id"
+          KeyType: "HASH"
         - 
-          AttributeName: 'row_created_at'
-          KeyType: 'RANGE'
-
-      TableName: !Ref DBTableName
+          AttributeName: "row_created_at"
+          KeyType: "RANGE"
 
       ProvisionedThroughput:
         ReadCapacityUnits: 5
@@ -140,7 +174,7 @@ Resources:
               KeyType: "RANGE"
           Projection: 
             NonKeyAttributes: 
-              - "Id"
+              - "summary"
               - "developer"
               - "score"
             ProjectionType: "INCLUDE"
@@ -166,14 +200,9 @@ Resources:
             ReadCapacityUnits: "5"
             WriteCapacityUnits: "5"
 
-        
-  ExitFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: functions/Exit/
-      Runtime: python3.8
-      Handler: app.lambda_handler
-      Timeout: 5
+      Tags:
+        - Key: project
+          Value: freeappshowroom
 
 Outputs:
   # fasGPlayHarvesterStateMachineHourlyTradingSchedule is an implicit Schedule event rule created out of Events key under Serverless::StateMachine
