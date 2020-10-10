@@ -6,6 +6,22 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max)) + 1;
 }
 
+const get_file_name = (root_folder, category, result_count, ext) => {
+    d = new Date
+    const formatted_date = [
+        d.getFullYear(),
+        d.getMonth() + 1,
+        d.getDate(),
+        d.getHours(),
+        d.getMinutes(),
+        d.getSeconds()
+    ].join('-');
+
+    const file_name = `${root_folder}/${d.getFullYear()}/${d.getMonth()+1}/${formatted_date}-${category}-${result_count}-rows.${ext}`;
+    return file_name
+}
+
+
 const uploadFile = async (s3, bucket_name, file_path, fileContent) => {
 
     // Setting up S3 upload parameters
@@ -87,7 +103,8 @@ exports.lambdaHandler = async (event, context, callback) => {
 
     let google_store = new gplay.FAS_Google_PlayStore_Scraper_Wrapper(input_params);
     var result = await google_store.get_search(query, requested_count, fullDetail = true)
-    const jsonFilename = new Date().getTime() + '.json';
+    const result_count = result['data'].length || 0
+    const jsonFilename = get_file_name(root_folder, category, result_count, "json")
     let data = JSON.stringify(result)
     s3_file_path = uploadFile(s3, bucket_name, jsonFilename, data)
     let response = {
@@ -96,7 +113,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             "category": category,
             "query": query,
             "requested_count": requested_count,
-            "result_count": result['data'].length || 0,
+            "result_count": result_count,
             "file_path": jsonFilename
         }
     }
