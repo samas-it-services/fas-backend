@@ -4,7 +4,7 @@ eventFile_GPlayAppSearcherFunction=./functions/GPlayAppSearcher/event.json
 eventFile_SaveToDynamoDbFunction=./data/result1.json
 DBTableName=FAS-Google
 InputBucketName=data.freeappshowroom.com
-S3RootFolder=FASdataharvester/gplay/searchresult
+S3RootFolder=raw/gplay/search
 region=us-west-2
 Debug=0
 # ---------- no changes beyond this point ----------
